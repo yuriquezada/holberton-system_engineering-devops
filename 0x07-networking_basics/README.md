@@ -1,5 +1,5 @@
 # 0x07. Networking basics #0
-At the end of this project you are expected to be able to explain, without the help of Google:
+At the end of this project you are expected to be able to explain, **without the help of Google**:
 * OSI model
   * What is it?
   * How many layers does it have?
