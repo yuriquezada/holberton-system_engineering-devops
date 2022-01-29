@@ -11,3 +11,4 @@ replace3="\n\tadd_header X-Served-By \$hostname;"
 sudo sed -i "47i\ $replace3$replace$replace2" /etc/nginx/sites-available/default
 sudo service nginx restart
 sudo service nginx reload
+
