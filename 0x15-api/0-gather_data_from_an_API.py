@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 '''
-Consume API with Python
+Return information about his/her TODO list progress
 '''
 import requests
 from sys import argv
