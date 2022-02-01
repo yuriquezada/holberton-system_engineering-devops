@@ -6,22 +6,20 @@ employee's todo list progress
 import json
 import requests
 if __name__ == '__main__':
-    users = requests.get("https://jsonplaceholder.typicode.com/users",
-                         verify=False).json()
-    userdict = {}
-    usernamedict = {}
-    for user in users:
+    url = "https://jsonplaceholder.typicode.com/users"
+    us = requests.get(url, verify=False).json()
+    undoc = {}
+    udoc = {}
+    for user in us:
         uid = user.get("id")
-        userdict[uid] = []
-        usernamedict[uid] = user.get("username")
-    todo = requests.get("https://jsonplaceholder.typicode.com/todos",
-                        verify=False).json()
-    for task in todo:
-        taskdict = {}
-        uid = task.get("userId")
-        taskdict["task"] = task.get('title')
-        taskdict["completed"] = task.get('completed')
-        taskdict["username"] = usernamedict.get(uid)
-        userdict.get(uid).append(taskdict)
-    with open("todo_all_employees.json", 'w') as jsonfile:
-        json.dump(userdict, jsonfile)
+        udoc[uid] = []
+        undoc[uid] = user.get("username")
+    url = "https://jsonplaceholder.typicode.com/todos"
+    todo = requests.get(url, verify=False).json()
+    [udoc.get(t.get("userId")).append({"task": t.get("title"),
+                                       "completed": t.get("completed"),
+                                       "username": undoc.get(
+                                               t.get("userId"))})
+     for t in todo]
+    with open("todo_all_employees.json", 'w') as jsf:
+        json.dump(udoc, jsf)
