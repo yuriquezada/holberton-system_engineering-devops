@@ -4,7 +4,7 @@ Return information about his/her TODO list progress
 '''
 import requests
 from sys import argv
-if __name__ == "__main__":
+if __name__ == '__main__':
     url = "https://jsonplaceholder.typicode.com/"
     user = requests.get(url + "users/{}".format(sys.argv[1])).json()
     todos = requests.get(url + "todos", params={"userId": sys.argv[1]}).json()
