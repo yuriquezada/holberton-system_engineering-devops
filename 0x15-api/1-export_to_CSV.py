@@ -7,32 +7,14 @@ from email.quoprimime import quote
 import requests
 from sys import argv
 if __name__ == "__main__":
-    employeeID = argv[1]
+    user_id = sys.argv[1]
+    url = "https://jsonplaceholder.typicode.com/"
+    user = requests.get(url + "users/{}".format(user_id)).json()
+    username = user.get("username")
+    todos = requests.get(url + "todos", params={"userId": user_id}).json()
 
-    url = 'https://jsonplaceholder.typicode.com/users/{}/'.format(employeeID)
-    employee = requests.get(url)
-
-    route = 'https://jsonplaceholder.typicode.com/users/{}/todos'
-    url = route.format(employeeID)
-    todoByEmployee = requests.get(url)
-
-    username = employee.json()['username']
-    rows = []
-    data = {}
-
-    for i in todoByEmployee.json():
-        data = {}
-        data['USER_ID'] = employeeID
-        data['USERNAME'] = username
-        data['TASK_COMPLETED_STATUS'] = i['completed']
-        data['TASK_TITLE'] = i['title']
-        rows.append(data)
-
-    file = '{}.csv'.format(employeeID)
-
-    with open(file, 'w') as f:
-        fieldnames = [
-            'USER_ID', 'USERNAME', 'TASK_COMPLETED_STATUS', 'TASK_TITLE']
-        writer = csv.DictWriter(
-            f, fieldnames=fieldnames, quoting=csv.QUOTE_ALL)
-        writer.writerows(rows)
+    with open("{}.csv".format(user_id), "w", newline="") as csvfile:
+        writer = csv.writer(csvfile, quoting=csv.QUOTE_ALL)
+        [writer.writerow(
+            [user_id, username, t.get("completed"), t.get("title")]
+         ) for t in todos]
