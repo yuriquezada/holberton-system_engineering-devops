@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""Return to-do list information for a given employee ID."""
+'''
+Return to-do list information for a given employee ID.
+'''
 import requests
 from sys import argv
 
